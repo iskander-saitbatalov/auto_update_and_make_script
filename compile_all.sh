@@ -2,20 +2,32 @@
 
 source config_file.cfg
 
-for dir in $DIRS_ARRAY
+for dir in ${DIRS_ARRAY[@]}
 do
-	cd ~/$dir
+  if [ -f dir ]; then
+    echo 'Project directory "$dir" exist.'
+    $SETCOLOR_SUCCESS
+    echo -n "$(tput hpa $(tput cols))$(tput cub 6)[OK]"
+    $SETCOLOR_NORMAL
+    echo
+  else
+    $SETCOLOR_FAILURE
+    echo -n 'Project directory "'$dir'" doesn"t exist.'"$(tput hpa $(tput cols))$(tput cub 6)[fail]"
+    $SETCOLOR_NORMAL
+    echo
+    continue
+  fi
+  cd ~/$dir
 
-	echo -e "${BOLD}${LGREEN}"
-	echo Fetch/rebasing $dir
-	echo -e "${NORMAL}"
+  echo -e "${BOLD}${LGREEN}"
+  echo Fetch/rebasing $dir
+  echo -e "${NORMAL}"
 
-	git fetch > ~/"$dir_$GIT_LOG"
-	git rebase origin/master >> ~/"$dir_$GIT_LOG"
+  git fetch > ~/"$dir_$GIT_LOG"
+  git rebase origin/master >> ~/"$dir_$GIT_LOG"
 done
 
-
-for dir in $DIRS_ARRAY
+for dir in ${DIRS_ARRAY[@]}
 do
 	cd ~/$dir/$DIR_CON
 
