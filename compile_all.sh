@@ -50,11 +50,14 @@ do
 	echo -e "${BOLD}${LGREEN}"
 	echo Compiling debug console from $dir...
 	echo -e "${NORMAL}"
+        qmake-qt4
 	time tmake $MAKE_FLAG debug > ~/"$dir_$BUILD_CON_LOG"
 
 	echo -e "${BOLD}${LGREEN}"
 	echo Compiling release console from $dir...
 	echo -e "${NORMAL}"
+
+        qmake-qt4
 	time tmake $MAKE_FLAG release >> ~/"$dir_$BUILD_CON_LOG"
 
 	cd ~/$dir/$DIR_GUI
@@ -62,11 +65,13 @@ do
 	echo -e "${BOLD}${LGREEN}"
 	echo Compiling debug GUI from $dir...
 	echo -e "${NORMAL}"
+        qmake-qt4
 	time tmake $MAKE_FLAG debug > ~/"$dir_$BUILD_GUI_LOG"
 
 	echo -e "${BOLD}${LGREEN}"
 	echo Compiling release GUI from $dir...
 	echo -e "${NORMAL}"
+        qmake-qt4
 	time tmake $MAKE_FLAG release >> ~/"$dir_$BUILD_GUI_LOG"
 done
 
