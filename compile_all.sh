@@ -2,7 +2,7 @@
 
 source config_file.cfg
 
-for dir in tNavigator tNavigator2 tNavigator_old
+for dir in $DIRS_ARRAY
 do
 	cd ~/$dir
 
@@ -15,7 +15,7 @@ do
 done
 
 
-for dir in tNavigator tNavigator2 tNavigator_old
+for dir in $DIRS_ARRAY
 do
 	cd ~/$dir/$DIR_CON
 
