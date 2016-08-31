@@ -29,11 +29,15 @@ do
   fi
   cd ~/$dir
 
+  # TODO: create check that git inited.
+
   echo -e "${BOLD}${LGREEN}"
   echo Fetch/rebasing $dir
   echo -e "${NORMAL}"
 
   git fetch > ~/"$dir_$GIT_LOG"
+
+  # TODO: сheck that we are don not have stashed commits and if we have, then save them.
   git rebase origin/master >> ~/"$dir_$GIT_LOG"
 done
 
