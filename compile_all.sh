@@ -2,12 +2,14 @@
 
 source config_file.cfg
 
+index_index=-1
+
 for dir in ${DIRS_ARRAY[@]}
 do
+  index_index=$(($index_index+1))
   if [ -d ~/$dir ]; then
-    echo 'Project directory ('$dir') exist.'
     $SETCOLOR_SUCCESS
-    echo -n "$(tput hpa $(tput cols))$(tput cub 6)[OK]"
+    echo -n 'Project directory ('$dir') exist.'"$(tput hpa $(tput cols))$(tput cub 6)[OK]"
     $SETCOLOR_NORMAL
     echo
   else
@@ -31,14 +33,14 @@ do
 
   # TODO: create check that git inited.
 
-  echo -e "${BOLD}${LGREEN}"
-  echo Fetch/rebasing $dir
-  echo -e "${NORMAL}"
+  $SETCOLOR_SUCCESS
+  echo 'Fetch/rebasing' $dir"$(tput hpa $(tput cols))$(tput cub 6)[OK]"
+  $SETCOLOR_NORMAL
 
   git fetch > ~/"$dir_$GIT_LOG"
 
   # TODO: сheck that we are don not have stashed commits and if we have, then save them.
-  git rebase origin/master >> ~/"$dir_$GIT_LOG"
+  git rebase origin/${BRANCHS_ARRAY[index_index]} >> ~/"$dir_$GIT_LOG"
 done
 
 for dir in ${DIRS_ARRAY[@]}
