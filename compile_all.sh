@@ -4,18 +4,28 @@ source config_file.cfg
 
 for dir in ${DIRS_ARRAY[@]}
 do
-  if [ -f dir ]; then
-    echo 'Project directory "$dir" exist.'
+  if [ -d ~/$dir ]; then
+    echo 'Project directory ('$dir') exist.'
     $SETCOLOR_SUCCESS
     echo -n "$(tput hpa $(tput cols))$(tput cub 6)[OK]"
     $SETCOLOR_NORMAL
     echo
   else
-    $SETCOLOR_FAILURE
-    echo -n 'Project directory "'$dir'" doesn"t exist.'"$(tput hpa $(tput cols))$(tput cub 6)[fail]"
-    $SETCOLOR_NORMAL
-    echo
-    continue
+
+    mkdir -p ~/$dir
+
+    if [ -d ~/$dir ]; then
+      $SETCOLOR_SUCCESS
+      echo -n 'Project directory ('~/$dir') did not exist. The directory was created successfully.'."$(tput hpa $(tput cols))$(tput cub 6)[OK]"
+      echo
+      $SETCOLOR_NORMAL
+    else
+      $SETCOLOR_FAILURE
+      echo -n 'Project directory ('~/$dir') doesn"t exist. Can"t create.'"$(tput hpa $(tput cols))$(tput cub 6)[fail]"
+      echo
+      $SETCOLOR_NORMAL
+      continue
+    fi
   fi
   cd ~/$dir
 
