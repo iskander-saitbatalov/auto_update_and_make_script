@@ -45,33 +45,92 @@ done
 
 for dir in ${DIRS_ARRAY[@]}
 do
-	cd ~/$dir/$DIR_CON
+  #TODO: make all type of compilations manually from "config_file.cfg"
 
-	echo -e "${BOLD}${LGREEN}"
-	echo Compiling debug console from $dir...
-	echo -e "${NORMAL}"
-        qmake-qt4
-	time tmake $MAKE_FLAG debug > ~/"$dir_$BUILD_CON_LOG"
+  #######################################
+  # build-con                           #
+  #######################################
+  cd ~/$dir/$DIR_CON
 
-	echo -e "${BOLD}${LGREEN}"
-	echo Compiling release console from $dir...
-	echo -e "${NORMAL}"
+  #build-con debug
+  echo -e "${BOLD}${LGREEN}"
+  echo Compiling debug console from $dir...
+  echo -e "${NORMAL}"
+  qmake-qt4
+  time tmake $MAKE_FLAG debug > ~/"$dir_$BUILD_CON_LOG"
 
-        qmake-qt4
-	time tmake $MAKE_FLAG release >> ~/"$dir_$BUILD_CON_LOG"
+  #build-con release
+  echo -e "${BOLD}${LGREEN}"
+  echo Compiling release console from $dir...
+  echo -e "${NORMAL}"
+  qmake-qt4
+  time tmake $MAKE_FLAG release >> ~/"$dir_$BUILD_CON_LOG"
 
-	cd ~/$dir/$DIR_GUI
+  #build-con mpvt.debug
+  echo -e "${BOLD}${LGREEN}"
+  echo Compiling mpvt debug console from $dir...
+  echo -e "${NORMAL}"
+  ./qmake-mpvt-debug.sh
+  time tmake $MAKE_FLAG -f Makefile.mpvt_debug >> ~/"$dir_$BUILD_CON_LOG"
 
-	echo -e "${BOLD}${LGREEN}"
-	echo Compiling debug GUI from $dir...
-	echo -e "${NORMAL}"
-        qmake-qt4
-	time tmake $MAKE_FLAG debug > ~/"$dir_$BUILD_GUI_LOG"
+  #build-con mpvt.release
+  echo -e "${BOLD}${LGREEN}"
+  echo Compiling mpvt release console from $dir...
+  echo -e "${NORMAL}"
+  ./qmake-mpvt-release.sh
+  time tmake $MAKE_FLAG -f Makefile.mpvt >> ~/"$dir_$BUILD_CON_LOG"
 
-	echo -e "${BOLD}${LGREEN}"
-	echo Compiling release GUI from $dir...
-	echo -e "${NORMAL}"
-        qmake-qt4
-	time tmake $MAKE_FLAG release >> ~/"$dir_$BUILD_GUI_LOG"
+
+  #######################################
+  # build-con.MPI                       #
+  #######################################
+  cd ~/$dir/$DIR_CON_MPI
+
+  #build-con.MPI debug
+  echo -e "${BOLD}${LGREEN}"
+  echo Compiling debug console MPI version from $dir/$DIR_CON_MPI...
+  echo -e "${NORMAL}"
+  qmake-qt4
+  time tmake $MAKE_FLAG debug > ~/"$dir_$BUILD_CON_LOG"
+
+  #build-con.MPI release
+  echo -e "${BOLD}${LGREEN}"
+  echo Compiling release console MPI version from $dir/$DIR_CON_MPI...
+  echo -e "${NORMAL}"
+  qmake-qt4
+  time tmake $MAKE_FLAG release >> ~/"$dir_$BUILD_CON_LOG"
+
+  #build-con.MPI mpvt.debug
+  echo -e "${BOLD}${LGREEN}"
+  echo Compiling mpvt debug console MPI version from $dir/$DIR_CON_MPI...
+  echo -e "${NORMAL}"
+  ./qmake-mpvt-debug.sh
+  time tmake $MAKE_FLAG -f Makefile.mpvt_debug >> ~/"$dir_$BUILD_CON_LOG"
+
+  #build-con.MPI mpvt.release
+  echo -e "${BOLD}${LGREEN}"
+  echo Compiling mpvt release console MPI version from $dir/$DIR_CON_MPI...
+  echo -e "${NORMAL}"
+  ./qmake-mpvt-release.sh
+  time tmake $MAKE_FLAG -f Makefile.mpvt >> ~/"$dir_$BUILD_CON_LOG"
+
+  #######################################
+  # build                               #
+  #######################################
+  cd ~/$dir/$DIR_GUI
+
+  #build debug
+  echo -e "${BOLD}${LGREEN}"
+  echo Compiling debug GUI from $dir...
+  echo -e "${NORMAL}"
+  qmake-qt4
+  time tmake $MAKE_FLAG debug > ~/"$dir_$BUILD_GUI_LOG"
+
+  #build release
+  echo -e "${BOLD}${LGREEN}"
+  echo Compiling release GUI from $dir...
+  echo -e "${NORMAL}"
+  qmake-qt4
+  time tmake $MAKE_FLAG release >> ~/"$dir_$BUILD_GUI_LOG"
 done
 
