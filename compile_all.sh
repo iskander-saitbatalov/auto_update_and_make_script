@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source config_file.cfg
-
+source "${BASH_SOURCE%/*}/config_file.cfg"
+#source config_file.cfg
 index_index=-1
 
 for dir in ${DIRS_ARRAY[@]}
